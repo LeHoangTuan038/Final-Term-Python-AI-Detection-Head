@@ -1,0 +1,7 @@
+path: "C:/Users/SikunZed/Downloads/Python AI/Dataset Head Detection/Roboflow"
+train: train/images
+val: valid/images
+test: test/images
+
+names:
+  0: head
