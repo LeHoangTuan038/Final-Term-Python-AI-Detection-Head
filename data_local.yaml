@@ -1,4 +1,4 @@
-path: "C:/Users/SikunZed/Downloads/Python AI/Dataset Head Detection/Roboflow"
+path: "C:/Users/SikunZed/Downloads/Python AI/Dataset Head Detection/23CT111_Nhom12"
 train: train/images
 val: valid/images
 test: test/images

@@ -1,4 +1,4 @@
-﻿1. tạo file data\_local.yaml
+﻿1. tạo file data_local.yaml
 2. copy code vào file:
 
 path: "C:/Users/SikunZed/Downloads/Python AI/Dataset Head Detection/Roboflow"
@@ -15,7 +15,7 @@ names:
 
 3. mở terminal VScode copy code vào:
 
-Set-Location "C:\Users\SikunZed\Downloads\Python AI\Dataset Head Detection\Roboflow"
+Set-Location "C:\Users\SikunZed\Downloads\Python AI\Dataset Head Detection\23CT111_Nhom12"
 
 python -m venv .venv
 
@@ -42,7 +42,7 @@ python -m pip install ultralytics
 
 5. Cop code:
 
-yolo detect train model=yolo11s.pt data=data\_local.yaml epochs=100 imgsz=640 batch=8 patience=20 workers=0
+yolo detect train model=yolo11m.pt data=data\_local.yaml epochs=100 imgsz=640 batch=4 patience=20 workers=0
 
 6. Khi đã chốt mô hình, đánh giá trên tập test một lần:
 
@@ -70,7 +70,7 @@ CUDA available: True
 GPU: NVIDIA GeForce RTX 3060  
 
 Lệnh test bằng 1 video:
-yolo detect track model="runs/detect/train/weights/best.pt" source="video-thu.mp4" tracker=bytetrack.yaml device=0 show=True save=True
+yolo detect track model="runs/detect/train/weights/best.pt" source="video-thu-2.mp4" tracker=bytetrack.yaml device=0 show=True save=True
 
 Chạy trực tiếp bằng Webcam:
 yolo detect track model="runs/detect/train/weights/best.pt" source=0 tracker=bytetrack.yaml device=0 show=True
@@ -97,3 +97,22 @@ python dem_nguoi.py --source 1
 
 Có thể dùng video để kiểm tra trước:
 python dem_nguoi.py --source "video-thu.mp4"
+
+Với video lớp học, chế độ mặc định hiển thị Heads now (số đầu phát hiện ở khung
+hiện tại) và Max heads in frame (số đầu cao nhất từng phát hiện trong một khung).
+Mức cao nhất hữu ích để ước lượng số người cùng có mặt khi mọi người nằm trong
+khung hình; đây vẫn là kết quả phát hiện của model, có thể bỏ sót đầu bị che.
+Nhãn tracking và bảng đếm được thu nhỏ để che ít hình ảnh hơn.
+Chạy để vừa xem vừa lưu video có tracking và số đếm:
+python dem_nguoi.py --source "video-thu-2.mp4" --device 0 --save
+
+Video MP4 kết quả được lưu trong runs\detect\count. Nếu muốn chỉ định đường dẫn
+khác, dùng tùy chọn --output:
+python dem_nguoi.py --source "video-thu-2.mp4" --device 0 --output "ket-qua.mp4"
+
+Để đếm người đi qua một vạch, chọn chế độ crossing:
+python dem_nguoi.py --source "video-thu-2.mp4" --device 0 --count-mode crossing --line-y 0.55 --save
+
+Tham số --line-y là vị trí vạch theo tỷ lệ chiều cao của nguồn video (0.0 trên
+cùng, 1.0 dưới cùng), không phụ thuộc độ phân giải webcam. Vạch chỉ đếm track
+đi qua; nó không đếm được người ngồi yên trong lớp.
